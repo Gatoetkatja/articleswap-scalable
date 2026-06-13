@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: articleswap-db
+    environment:
+      POSTGRES_USER: articleswap
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: articleswap
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: articleswap-mq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  pgdata:
